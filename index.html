@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather is Happening!</title>
+    <link href="style.css" rel="stylesheet">
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body class="red">
+
+    <div id="app">
+        <div class="shadowed stuff-box red">
+            <h1 >Weather is Happening!</h1>
+            <p><a href="https://weatherishappening.com/">Cooler Weather Place</a></p>
+        </div>
+        <div v-if="latitude != undefined && longitude != undefined" id="loc" class="shadowed stuff-box red">
+            <h2>Your Location</h2>
+            <h5>You are located in {{city}}, {{region_name}} at coordinates ({{latitude}}, {{longitude}})</h5>
+        </div>
+        <div v-if="curr_weather != undefined" id="curr_weather" class="shadowed stuff-box red">
+            <h2>Current Conditions</h2>
+            <h4>Current Weather Conditions on {{curr_date}}</h4>
+            <p>Temperature: Feels Like - {{curr_weather.feels_like}}&deg;F | Actual - {{curr_weather.temp}}&deg;F</p>
+            <p>Expect {{curr_weather.description}}</p>
+            <p>Humidity: {{curr_weather.humidity}}&percnt;</p>
+            <p>Pressure: {{curr_weather.pressure}} hPa</p>
+        </div>
+        <div v-if="forecasts != []" id="forecast" class="shadowed stuff-box red">
+            <h1>5 Day 3-Hour Forecast</h1>
+            <h2><span style="color:red;">{{unlikely}} unlikely</span> <span style="color:grey;">{{neutral}} neutral</span> <span style="color: green;">{{likely}} likely</span></h2>
+            <div class="shadowed stuff-box" v-for="(forecast, idx) in forecasts"@click="forecastToggle":data-idx="idx":class="{black: forecast.state === 'neutral', green: forecast.state === 'likely', red: forecast.state === 'unlikely',}">
+                <h2>Conditions for {{forecast.date}}</h2>
+
+                <p>Temperature: Feels Like - {{forecast.weather_info.feels_like}}&deg;F | Actual - {{forecast.weather_info.temp}}&deg;F</p>
+                <p>Expect {{forecast.description}}</p>
+                <p>Humidity: {{forecast.weather_info.humidity}}&percnt;</p>
+                <p>Pressure: {{forecast.weather_info.pressure}} hPa</p>
+
+            </div>
+        </div>
+        <div v-else="" class="shadowed stuff-box red">
+            <h1>Please wait</h1>
+        </div>
+    </div>
+
+<script src="script.js"></script>
+</body>
+</html>
