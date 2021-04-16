@@ -15,12 +15,13 @@
         </div>
         <div v-if="latitude != undefined && longitude != undefined" id="loc" class="shadowed stuff-box red">
             <h2>Your Location</h2>
-            <h5>You are located in {{city}}, {{region_name}} at coordinates ({{latitude}}, {{longitude}})</h5>
+            <h5>You are located<span v-if="(city != undefined && region_name != undefined)"> in {{city}}, {{region_name}}</span> at coordinates ({{latitude}}, {{longitude}})</h5>
         </div>
         <div v-if="curr_weather != undefined" id="curr_weather" class="shadowed stuff-box red">
             <h2>Current Conditions</h2>
             <h4>Current Weather Conditions on {{curr_date}}</h4>
             <p>Temperature: Feels Like - {{curr_weather.feels_like}}&deg;F | Actual - {{curr_weather.temp}}&deg;F</p>
+            <p>High: {{daily_high}}&deg;F | Low: {{daily_low}}&deg;F</p>
             <p>Expect {{curr_weather.description}}</p>
             <p>Humidity: {{curr_weather.humidity}}&percnt;</p>
             <p>Pressure: {{curr_weather.pressure}} hPa</p>

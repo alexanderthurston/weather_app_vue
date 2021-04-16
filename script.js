@@ -87,15 +87,18 @@ const app = Vue.createApp({
                     this.region_name = json.region_name;
                     this.longitude = json.longitude;
                     this.latitude = json.latitude;
-                    return fetch(`http://api.openweathermap.org/data/2.5/weather?units=imperial&lat=${this.latitude}&lon=${this.longitude}&appid=${this.owmAPI}`);
+                    return fetch(`http://api.openweathermap.org/data/2.5/onecall?units=imperial&exclude=hourly,minutely,alerts&lat=${this.latitude}&lon=${this.longitude}&appid=${this.owmAPI}`);
                 })
 
                 .then(r => r.json())
                 .then(json => {
+                    this.stuff = json;
 
-                    this.curr_date = new Date(json.dt * 1000).toLocaleString();
-                    this.curr_weather = json.main;
-                    this.curr_weather.description = json.weather[0].description;
+                    this.curr_date = new Date(json.current.dt * 1000).toLocaleString();
+                    this.curr_weather = json.current;
+                    this.daily_high = json.daily[0].temp.max;
+                    this.daily_low = json.daily[0].temp.min;
+                    this.curr_weather.description = json.current.weather[0].description;
                     return fetch(`http://api.openweathermap.org/data/2.5/forecast?units=imperial&lat=${this.latitude}&lon=${this.longitude}&appid=${this.owmAPI}`);
                 })
                 .then(r => r.json())
